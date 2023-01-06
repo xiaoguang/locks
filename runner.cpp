@@ -7,8 +7,7 @@ using lock::LockBenchmark;
 using lock::makeThread;
 using std::tr1::bind;
 
-#define NUM_THREADS 2 << 5
-// #define NUM_THREADS 6
+#define NUM_THREADS 1 << 5
 
 void timeDiff(
   const struct timespec & start,
@@ -39,13 +38,14 @@ void TEST1() {
   clock_gettime(CLOCK_REALTIME, &start);
 
   for(int i = 0; i < NUM_THREADS; i++)
-    threads[i] = makeThread(bind(&LockBenchmark::correctness, &lb, 1024 << 5));
+    threads[i] = makeThread(bind(&LockBenchmark::correctness, &lb, 1 << 15));
   for(int i = 0; i < NUM_THREADS; i++)
     pthread_join(threads[i], NULL);
 
   clock_gettime(CLOCK_REALTIME, &stop);
 
   timeDiff(start, stop, diff);
+  cout << NUM_THREADS << endl;
   cout << lb.count() << endl;
   cout << diff.tv_sec << " : " << diff.tv_nsec << endl;
 }
