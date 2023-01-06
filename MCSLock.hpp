@@ -18,16 +18,15 @@ struct ALIGNED {
   bool flag;
 };
 
-class MCSLock : public Lock {
+class MCSLock : public BaseLock {
 
  public:
   static __thread uint64_t _ME;
 
-  MCSLock(uint64_t size);
+  explicit MCSLock(uint64_t size);
   ~MCSLock();
 
   virtual void lock();
-
   virtual void unlock();
 
  private:
@@ -37,7 +36,7 @@ class MCSLock : public Lock {
   // ALIGNED * _flags;
   MCSLock();
   MCSLock(MCSLock &);
-  MCSLock & operator=(MCSLock &);
+  MCSLock& operator=(MCSLock &);
 };
 
 }

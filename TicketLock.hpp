@@ -9,16 +9,15 @@
 
 namespace lock {
 
-class TicketLock : public Lock {
+class TicketLock : public BaseLock {
 
  public:
   static __thread uint64_t _ME;
 
-  TicketLock();
+  explicit TicketLock();
   ~TicketLock();
 
   virtual void lock();
-
   virtual void unlock();
 
  private:

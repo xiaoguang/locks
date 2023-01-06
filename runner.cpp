@@ -10,10 +10,12 @@ using std::tr1::bind;
 #define NUM_THREADS 2 << 5
 // #define NUM_THREADS 6
 
-void timeDiff(const struct timespec & start,
-              const struct timespec & stop,
-              struct timespec & diff) {
-  if (stop.tv_nsec > start.tv_nsec) {
+void timeDiff(
+  const struct timespec & start,
+  const struct timespec & stop,
+  struct timespec & diff
+) {
+  if(stop.tv_nsec > start.tv_nsec) {
     diff.tv_sec = stop.tv_sec - start.tv_sec;
     diff.tv_nsec = stop.tv_nsec - start.tv_nsec;
   }
@@ -27,7 +29,7 @@ void timeDiff(const struct timespec & start,
 void TEST1() {
   // MutexLock l;
   // SpinLock l;
-  // PeekSpinLock l;
+  // TTASSpinLock l;
   // MCSLock l(NUM_THREADS);
   TicketLock l;
   LockBenchmark lb(&l);
@@ -35,11 +37,11 @@ void TEST1() {
 
   struct timespec start, stop, diff;
   clock_gettime(CLOCK_REALTIME, &start);
+
   for(int i = 0; i < NUM_THREADS; i++)
     threads[i] = makeThread(bind(&LockBenchmark::correctness, &lb, 1024 << 5));
-  for(int i = 0; i < NUM_THREADS; i++) {
+  for(int i = 0; i < NUM_THREADS; i++)
     pthread_join(threads[i], NULL);
-  }
 
   clock_gettime(CLOCK_REALTIME, &stop);
 

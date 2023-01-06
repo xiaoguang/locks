@@ -9,7 +9,8 @@ using std::endl;
 
 namespace lock {
 
-class Lock {
+class BaseLock {
+ // interface pure virtual functions
  public:
   virtual void lock() = 0;
   virtual void unlock() = 0;

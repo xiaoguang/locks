@@ -6,9 +6,9 @@
 
 namespace lock {
 
-class MutexLock : public Lock {
+class MutexLock : public BaseLock {
  public:
-  MutexLock() { pthread_mutex_init(&_m, NULL); }
+  explicit MutexLock() { pthread_mutex_init(&_m, NULL); }
   ~MutexLock() { pthread_mutex_destroy(&_m); }
   virtual void lock() { pthread_mutex_lock(&_m); }
   virtual void unlock() { pthread_mutex_unlock(&_m); }
@@ -17,7 +17,7 @@ class MutexLock : public Lock {
   pthread_mutex_t _m;
 
   MutexLock(MutexLock &);
-  MutexLock & operator=(MutexLock &);
+  MutexLock& operator=(MutexLock &);
 };
 
 }

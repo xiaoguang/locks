@@ -2,25 +2,23 @@
 #include <assert.h>
 #include "MutexLock.hpp"
 #include "SpinLock.hpp"
-#include "PeekSpinLock.hpp"
+#include "TTASSpinLock.hpp"
 #include "MCSLock.hpp"
 #include "TicketLock.hpp"
 
-using lock::Lock;
+using lock::BaseLock;
 using lock::MutexLock;
 using lock::SpinLock;
-using lock::PeekSpinLock;
+using lock::TTASSpinLock;
 using lock::MCSLock;
 using lock::TicketLock;
 
 namespace lock {
 
 class LockBenchmark {
-
  public:
-
   LockBenchmark() : _count(0) {}
-  LockBenchmark(Lock * lock) : _count(0), _lock(lock) {}
+  LockBenchmark(BaseLock* lock) : _count(0), _lock(lock) {}
   ~LockBenchmark() {}
 
   inline uint64_t count() const { return _count; }
@@ -36,7 +34,7 @@ class LockBenchmark {
 
  private:
   uint64_t _count;
-  Lock * _lock;
+  BaseLock* _lock;
 
 };
 

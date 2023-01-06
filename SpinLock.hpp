@@ -4,9 +4,9 @@
 
 namespace lock {
 
-class SpinLock : public Lock {
+class SpinLock : public BaseLock {
  public:
-  SpinLock() : _locked(false) {}
+  explicit SpinLock() : _locked(false) {}
   ~SpinLock() {}
 
   virtual void lock() {
@@ -18,9 +18,9 @@ class SpinLock : public Lock {
   }
 
  private:
-  int _locked;
+  bool _locked;
   SpinLock(SpinLock & l);
-  SpinLock & operator=(SpinLock &);
+  SpinLock& operator=(SpinLock &);
 };
 
 }
