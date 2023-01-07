@@ -3,7 +3,7 @@
 #include "MutexLock.hpp"
 #include "SpinLock.hpp"
 #include "TTASSpinLock.hpp"
-#include "MCSLock.hpp"
+#include "AArrayLock.hpp"
 #include "ArrayLock.hpp"
 #include "TicketLock.hpp"
 
@@ -11,7 +11,7 @@ using lock::BaseLock;
 using lock::MutexLock;
 using lock::SpinLock;
 using lock::TTASSpinLock;
-using lock::MCSLock;
+using lock::AArrayLock;
 using lock::ArrayLock;
 using lock::TicketLock;
 
@@ -28,7 +28,6 @@ class LockBenchmark {
   inline uint64_t count() const { return _count; }
 
   void correctness(int times) {
-    assert(times > 0);
     for(int i = 0; i < times; i++) {
       _lock->lock();
       for (int j = 0; j < WORK_LOAD; j++) _count++;

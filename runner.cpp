@@ -7,9 +7,9 @@ using lock::LockBenchmark;
 using lock::makeThread;
 using std::tr1::bind;
 
-#define NUM_THREADS 1 << 4
+#define NUM_THREADS 6
 #define NUM_RUNS 1 << 2
-#define NUM_REENTRIES 1 << 10
+#define NUM_REENTRIES 1 << 22
 
 void timeDiff(
   const struct timespec & start,
@@ -27,10 +27,6 @@ void timeDiff(
 }
 
 void TEST0() {
-  // MutexLock l;
-  // SpinLock l;
-  // TTASSpinLock l;
-  // MCSLock l(NUM_THREADS);
   for(int k = 0; k < NUM_RUNS; k++) {
     TicketLock l;
     LockBenchmark lb(&l);
@@ -48,13 +44,10 @@ void TEST0() {
     cout << lb.count() << endl;
     cout << diff.tv_sec << " : " << diff.tv_nsec << endl;
   }
+  cout << endl;
 }
 
 void TEST1() {
-  // MutexLock l;
-  // SpinLock l;
-  // TTASSpinLock l;
-  // MCSLock l(NUM_THREADS);
   for(int k = 0; k < NUM_RUNS; k++) {
     MutexLock l;
     LockBenchmark lb(&l);
@@ -72,37 +65,10 @@ void TEST1() {
     cout << lb.count() << endl;
     cout << diff.tv_sec << " : " << diff.tv_nsec << endl;
   }
+  cout << endl;
 }
 
 void TEST2() {
-  // MutexLock l;
-  // SpinLock l;
-  // TTASSpinLock l;
-  // MCSLock l(NUM_THREADS);
-  for(int k = 0; k < NUM_RUNS; k++) {
-    MCSLock l(NUM_THREADS);
-    LockBenchmark lb(&l);
-    pthread_t threads[NUM_THREADS];
-    struct timespec start, stop, diff;
-
-    clock_gettime(CLOCK_REALTIME, &start);
-    for(int i = 0; i < NUM_THREADS; i++)
-      threads[i] = makeThread(bind(&LockBenchmark::correctness, &lb, NUM_REENTRIES));
-    for(int i = 0; i < NUM_THREADS; i++)
-      pthread_join(threads[i], NULL);
-    clock_gettime(CLOCK_REALTIME, &stop);
-
-    timeDiff(start, stop, diff);
-    cout << lb.count() << endl;
-    cout << diff.tv_sec << " : " << diff.tv_nsec << endl;
-  }
-}
-
-void TEST3() {
-  // MutexLock l;
-  // SpinLock l;
-  // TTASSpinLock l;
-  // MCSLock l(NUM_THREADS);
   for(int k = 0; k < NUM_RUNS; k++) {
     ArrayLock l(NUM_THREADS);
     LockBenchmark lb(&l);
@@ -120,6 +86,28 @@ void TEST3() {
     cout << lb.count() << endl;
     cout << diff.tv_sec << " : " << diff.tv_nsec << endl;
   }
+  cout << endl;
+}
+
+void TEST3() {
+  for(int k = 0; k < NUM_RUNS; k++) {
+    AArrayLock l(NUM_THREADS);
+    LockBenchmark lb(&l);
+    pthread_t threads[NUM_THREADS];
+    struct timespec start, stop, diff;
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    for(int i = 0; i < NUM_THREADS; i++)
+      threads[i] = makeThread(bind(&LockBenchmark::correctness, &lb, NUM_REENTRIES));
+    for(int i = 0; i < NUM_THREADS; i++)
+      pthread_join(threads[i], NULL);
+    clock_gettime(CLOCK_REALTIME, &stop);
+
+    timeDiff(start, stop, diff);
+    cout << lb.count() << endl;
+    cout << diff.tv_sec << " : " << diff.tv_nsec << endl;
+  }
+  cout << endl;
 }
 
 int main() {

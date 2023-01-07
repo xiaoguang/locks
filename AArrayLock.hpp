@@ -1,5 +1,5 @@
-#ifndef __MCS_LOCK_HPP__
-#define __MCS_LOCK_HPP__
+#ifndef __AARRAY_LOCK_HPP__
+#define __AARRAY_LOCK_HPP__
 
 #include <type_traits>
 #include <time.h>
@@ -18,12 +18,12 @@ struct ALIGNED {
   bool flag;
 };
 
-class MCSLock : public BaseLock {
+class AArrayLock : public BaseLock {
  public:
   static __thread uint64_t _ME;
 
-  explicit MCSLock(uint64_t size);
-  ~MCSLock();
+  explicit AArrayLock(uint64_t size);
+  ~AArrayLock();
 
   virtual void lock();
   virtual void unlock();
@@ -31,13 +31,11 @@ class MCSLock : public BaseLock {
  private:
   uint64_t _size;
   uint64_t _ticket;
-  uint64_t _turn;
+  ALIGNED* _flags;
 
-  ALIGNED * _flags;
-
-  MCSLock();
-  MCSLock(MCSLock &);
-  MCSLock& operator=(MCSLock &);
+  AArrayLock();
+  AArrayLock(AArrayLock&);
+  AArrayLock& operator=(AArrayLock &);
 };
 
 }
