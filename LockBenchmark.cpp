@@ -4,6 +4,7 @@
 #include "SpinLock.hpp"
 #include "TTASSpinLock.hpp"
 #include "MCSLock.hpp"
+#include "ArrayLock.hpp"
 #include "TicketLock.hpp"
 
 using lock::BaseLock;
@@ -11,7 +12,10 @@ using lock::MutexLock;
 using lock::SpinLock;
 using lock::TTASSpinLock;
 using lock::MCSLock;
+using lock::ArrayLock;
 using lock::TicketLock;
+
+#define WORK_LOAD 1 << 3
 
 namespace lock {
 
@@ -27,7 +31,7 @@ class LockBenchmark {
     assert(times > 0);
     for(int i = 0; i < times; i++) {
       _lock->lock();
-      for (int j = 0; j < 1024; j++) _count++;
+      for (int j = 0; j < WORK_LOAD; j++) _count++;
       _lock->unlock();
     }
   }

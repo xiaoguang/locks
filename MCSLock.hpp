@@ -19,7 +19,6 @@ struct ALIGNED {
 };
 
 class MCSLock : public BaseLock {
-
  public:
   static __thread uint64_t _ME;
 
@@ -33,7 +32,9 @@ class MCSLock : public BaseLock {
   uint64_t _size;
   uint64_t _ticket;
   uint64_t _turn;
-  // ALIGNED * _flags;
+
+  ALIGNED * _flags;
+
   MCSLock();
   MCSLock(MCSLock &);
   MCSLock& operator=(MCSLock &);
