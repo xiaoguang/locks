@@ -17,7 +17,7 @@ using lock::ArrayLock;
 using lock::TicketLock;
 using lock::VirtualQueueLock;
 
-#define WORK_LOAD 1 << 6
+#define WORK_LOAD 1 << 10
 
 namespace lock {
 

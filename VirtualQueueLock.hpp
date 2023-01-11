@@ -4,7 +4,6 @@
 #include <type_traits>
 #include <time.h>
 #include "Lock.hpp"
-#include "MutexLock.hpp"
 
 using std::aligned_storage;
 using std::alignment_of;
@@ -15,10 +14,8 @@ typedef aligned_storage<63, alignment_of<bool>::value>::type Align;
 
 struct VQNode {
   VQNode() { _locked = true; }
-  // VQNode(pthread_t owner) { _locked = true; _owner = owner; }
   Align _padding;
   bool _locked;
-  // pthread_t _owner;
 };
 
 class VirtualQueueLock : public BaseLock {
@@ -34,7 +31,6 @@ class VirtualQueueLock : public BaseLock {
 
  private:
   VQNode* _tail;
-  // MutexLock* _l;
   VirtualQueueLock(VirtualQueueLock&);
   VirtualQueueLock& operator=(VirtualQueueLock&);
 };
