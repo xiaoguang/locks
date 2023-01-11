@@ -18,16 +18,16 @@ AArrayLock::~AArrayLock() {
   delete[] _flags;
 }
 
-void AArrayLock::lock() { 
-  uint64_t slot = __sync_fetch_and_add(&_ticket, 1);
+void AArrayLock::lock() {
+  uint64_t slot = __atomic_fetch_add(&_ticket, 1, __ATOMIC_RELAXED);
   _ME = slot % _size;
   while(!_flags[_ME].flag) {}
 }
 
 void AArrayLock::unlock() {
   uint64_t slot = (_ME + 1) % _size;
-  __sync_bool_compare_and_swap(&_flags[_ME].flag, true, false);
-  __sync_bool_compare_and_swap(&_flags[slot].flag, false, true);
+  _flags[_ME].flag = false;
+  _flags[slot].flag = true;
 }
 
 }

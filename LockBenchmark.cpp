@@ -6,6 +6,7 @@
 #include "AArrayLock.hpp"
 #include "ArrayLock.hpp"
 #include "TicketLock.hpp"
+#include "VirtualQueueLock.hpp"
 
 using lock::BaseLock;
 using lock::MutexLock;
@@ -14,8 +15,9 @@ using lock::TTASSpinLock;
 using lock::AArrayLock;
 using lock::ArrayLock;
 using lock::TicketLock;
+using lock::VirtualQueueLock;
 
-#define WORK_LOAD 1 << 3
+#define WORK_LOAD 1 << 6
 
 namespace lock {
 

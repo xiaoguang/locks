@@ -19,17 +19,15 @@ ArrayLock::~ArrayLock() {
 }
 
 void ArrayLock::lock() { 
-  uint64_t slot = __sync_fetch_and_add(&_ticket, 1);
+  uint64_t slot = __atomic_fetch_add(&_ticket, 1, __ATOMIC_RELAXED);
   _ME = slot % _size;
   while(!_flags[_ME]) {}
-  // cout << _ME << " lock " << endl;
 }
 
 void ArrayLock::unlock() {
-  // cout << _ME << " unlock " << endl;
   uint64_t slot = (_ME + 1) % _size;
-  __sync_bool_compare_and_swap(&_flags[_ME], true, false);
-  __sync_bool_compare_and_swap(&_flags[slot], false, true);
+  _flags[_ME] = false;
+  _flags[slot] = true;
 }
 
 }
