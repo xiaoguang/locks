@@ -16,6 +16,19 @@ class BaseLock {
   virtual void unlock() = 0;
 };
 
+class ScopedLock {
+public:
+  explicit ScopedLock(BaseLock* lock) : _l(lock) { _l->lock(); }
+  ~ScopedLock() { _l->unlock(); }
+
+private:
+  BaseLock* _l;
+
+  // Non-copyable, non-assignable
+  ScopedLock(ScopedLock&);
+  ScopedLock& operator=(ScopedLock&);
+}; 
+
 }
 
 #endif
