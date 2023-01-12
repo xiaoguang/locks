@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <assert.h>
+#include "Config.hpp"
 #include "MutexLock.hpp"
 #include "SpinLock.hpp"
 #include "TTASSpinLock.hpp"
@@ -17,8 +18,6 @@ using lock::ArrayLock;
 using lock::TicketLock;
 using lock::VirtualQueueLock;
 
-#define WORK_LOAD 1 << 10
-
 namespace lock {
 
 class LockBenchmark {
@@ -31,9 +30,8 @@ class LockBenchmark {
 
   void correctness(int times) {
     for(int i = 0; i < times; i++) {
-      _lock->lock();
+      ScopedLock sl(_lock);
       for (int j = 0; j < WORK_LOAD; j++) _count++;
-      _lock->unlock();
     }
   }
 
