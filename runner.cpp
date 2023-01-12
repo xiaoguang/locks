@@ -7,11 +7,6 @@ using lock::LockBenchmark;
 using lock::makeThread;
 using std::tr1::bind;
 
-#define NUM_THREADS 6
-#define NUM_SLOTS 6
-#define NUM_RUNS 1 << 2
-#define NUM_REENTRIES 1 << 18
-
 void timeDiff(
   const struct timespec & start,
   const struct timespec & stop,
