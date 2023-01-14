@@ -1,6 +1,5 @@
 #include <cstdint>
 #include <assert.h>
-#include "Config.hpp"
 #include "MutexLock.hpp"
 #include "SpinLock.hpp"
 #include "TTASSpinLock.hpp"
@@ -8,6 +7,7 @@
 #include "ArrayLock.hpp"
 #include "TicketLock.hpp"
 #include "VirtualQueueLock.hpp"
+#include "MCSQueueLock.hpp"
 
 using lock::BaseLock;
 using lock::MutexLock;
@@ -17,6 +17,7 @@ using lock::AArrayLock;
 using lock::ArrayLock;
 using lock::TicketLock;
 using lock::VirtualQueueLock;
+using lock::MCSQueueLock;
 
 namespace lock {
 
