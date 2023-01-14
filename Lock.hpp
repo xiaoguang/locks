@@ -1,8 +1,10 @@
+
 #ifndef __LOCK_HPP__
 #define __LOCK_HPP__
 
 #include <iostream>
 #include <cstdlib>
+#include "Config.hpp"
 
 using std::cout;
 using std::endl;
@@ -27,8 +29,9 @@ private:
   // Non-copyable, non-assignable
   ScopedLock(ScopedLock&);
   ScopedLock& operator=(ScopedLock&);
-}; 
+};
 
 }
 
 #endif
+
