@@ -1,4 +1,3 @@
-
 #ifndef __LOCK_HPP__
 #define __LOCK_HPP__
 
@@ -34,4 +33,3 @@ private:
 }
 
 #endif
-
