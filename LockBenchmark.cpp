@@ -8,6 +8,7 @@
 #include "TicketLock.hpp"
 #include "VirtualQueueLock.hpp"
 #include "MCSQueueLock.hpp"
+#include "TicksClock.hpp"
 
 using lock::BaseLock;
 using lock::MutexLock;
@@ -18,6 +19,7 @@ using lock::ArrayLock;
 using lock::TicketLock;
 using lock::VirtualQueueLock;
 using lock::MCSQueueLock;
+using lock::TicksClock;
 
 namespace lock {
 
