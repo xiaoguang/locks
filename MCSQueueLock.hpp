@@ -1,4 +1,3 @@
-
 #ifndef __MCS_QUEUE_LOCK_HPP__
 #define __MCS_QUEUE_LOCK_HPP__
 
