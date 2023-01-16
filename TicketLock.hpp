@@ -25,8 +25,8 @@ class TicketLock : public BaseLock {
   uint64_t _ticket;
   uint64_t _turn;
   bool _locked;
-  TicketLock(TicketLock &);
-  TicketLock & operator=(TicketLock &);
+  TicketLock(TicketLock&);
+  TicketLock& operator=(TicketLock&);
 
 };
 

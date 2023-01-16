@@ -1,0 +1,27 @@
+#ifndef __LOCK_STATS_HPP__
+#define __LOCK_STATS_HPP__
+
+#include "TicksClock.hpp"
+
+namespace lock {
+
+class Stats {
+ public:
+  Stats(pthread_t owner) {
+    _owner = owner;
+    _workTicks = 0;
+    _lockTicks = 0;
+    _unlockTicks = 0;
+  }
+  ~Stats() {}
+
+ private:
+  pthread_t _owner;
+  TicksClock::Ticks _workTicks;
+  TicksClock::Ticks _lockTicks;
+  TicksClock::Ticks _unlockTicks;
+};
+
+}
+
+#endif
