@@ -7,7 +7,7 @@
 #define NUM_THREADS 1 << 4
 #define NUM_SLOTS 1 << 4
 #define NUM_RUNS 1 << 2
-#define NUM_REENTRIES 1 << 22
+#define NUM_REENTRIES 1 << 15
 
 #include <type_traits>
 
