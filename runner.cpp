@@ -111,18 +111,16 @@ void TEST4() {
     VirtualQueueLock l;
     LockBenchmark lb(&l);
     pthread_t threads[NUM_THREADS];
-    struct timespec start, stop, diff;
+    TicksClock::Ticks before = TicksClock::getTicks();
 
-    clock_gettime(CLOCK_REALTIME, &start);
     for(int i = 0; i < NUM_THREADS; i++)
       threads[i] = makeThread(bind(&LockBenchmark::correctness, &lb, NUM_REENTRIES));
     for(int i = 0; i < NUM_THREADS; i++)
       pthread_join(threads[i], NULL);
-    clock_gettime(CLOCK_REALTIME, &stop);
 
-    timeDiff(start, stop, diff);
+    TicksClock::Ticks duration = TicksClock::getTicks() - before;
     cout << lb.count() << endl;
-    cout << diff.tv_sec << " : " << diff.tv_nsec << endl;
+    cout << duration << endl;
   }
   cout << endl;
 }
@@ -132,8 +130,6 @@ void TEST5() {
     MCSQueueLock l;
     LockBenchmark lb(&l);
     pthread_t threads[NUM_THREADS];
-    // struct timespec start, stop, diff;
-    // clock_gettime(CLOCK_REALTIME, &start);
     TicksClock::Ticks before = TicksClock::getTicks();
 
     for(int i = 0; i < NUM_THREADS; i++)
@@ -141,13 +137,9 @@ void TEST5() {
     for(int i = 0; i < NUM_THREADS; i++)
       pthread_join(threads[i], NULL);
 
-    // clock_gettime(CLOCK_REALTIME, &stop);
     TicksClock::Ticks duration = TicksClock::getTicks() - before;
+    cout << lb.count() << endl;
     cout << duration << endl;
-
-    // timeDiff(start, stop, diff);
-    // cout << lb.count() << endl;
-    // cout << diff.tv_sec << " : " << diff.tv_nsec << endl;
   }
   cout << endl;
 }
