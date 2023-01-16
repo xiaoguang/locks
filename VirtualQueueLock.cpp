@@ -16,7 +16,7 @@ VirtualQueueLock::~VirtualQueueLock() {
 
 void VirtualQueueLock::lock() {
   if(!_CURR) _CURR = new VQNode();
-  VQNode* pred = __atomic_exchange_n(&_tail, _CURR, __ATOMIC_SEQ_CST);
+  VQNode* pred = __atomic_exchange_n(&_tail, _CURR, __ATOMIC_RELAXED);
   _PRED = pred;
   while(pred->_locked) {}
 }
