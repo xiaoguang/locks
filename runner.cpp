@@ -28,16 +28,19 @@ void TEST0() {
     LockBenchmark lb(&l);
     pthread_t threads[NUM_THREADS];
     struct timespec start, stop, diff;
-
     clock_gettime(CLOCK_REALTIME, &start);
+    TicksClock::Ticks before = TicksClock::getTicks();
+
     for(int i = 0; i < NUM_THREADS; i++)
       threads[i] = makeThread(bind(&LockBenchmark::correctness, &lb, NUM_REENTRIES));
     for(int i = 0; i < NUM_THREADS; i++)
       pthread_join(threads[i], NULL);
     clock_gettime(CLOCK_REALTIME, &stop);
 
+    TicksClock::Ticks duration = TicksClock::getTicks() - before;
     timeDiff(start, stop, diff);
     cout << lb.count() << endl;
+    cout << duration << endl;
     cout << diff.tv_sec << " : " << diff.tv_nsec << endl;
   }
   cout << endl;
@@ -49,16 +52,19 @@ void TEST1() {
     LockBenchmark lb(&l);
     pthread_t threads[NUM_THREADS];
     struct timespec start, stop, diff;
-
     clock_gettime(CLOCK_REALTIME, &start);
+    TicksClock::Ticks before = TicksClock::getTicks();
+
     for(int i = 0; i < NUM_THREADS; i++)
       threads[i] = makeThread(bind(&LockBenchmark::correctness, &lb, NUM_REENTRIES));
     for(int i = 0; i < NUM_THREADS; i++)
       pthread_join(threads[i], NULL);
     clock_gettime(CLOCK_REALTIME, &stop);
 
+    TicksClock::Ticks duration = TicksClock::getTicks() - before;
     timeDiff(start, stop, diff);
     cout << lb.count() << endl;
+    cout << duration << endl;
     cout << diff.tv_sec << " : " << diff.tv_nsec << endl;
   }
   cout << endl;
@@ -69,18 +75,16 @@ void TEST2() {
     ArrayLock l(NUM_SLOTS);
     LockBenchmark lb(&l);
     pthread_t threads[NUM_THREADS];
-    struct timespec start, stop, diff;
+    TicksClock::Ticks before = TicksClock::getTicks();
 
-    clock_gettime(CLOCK_REALTIME, &start);
     for(int i = 0; i < NUM_THREADS; i++)
       threads[i] = makeThread(bind(&LockBenchmark::correctness, &lb, NUM_REENTRIES));
     for(int i = 0; i < NUM_THREADS; i++)
       pthread_join(threads[i], NULL);
-    clock_gettime(CLOCK_REALTIME, &stop);
 
-    timeDiff(start, stop, diff);
+    TicksClock::Ticks duration = TicksClock::getTicks() - before;
     cout << lb.count() << endl;
-    cout << diff.tv_sec << " : " << diff.tv_nsec << endl;
+    cout << duration << endl;
   }
   cout << endl;
 }
@@ -90,18 +94,16 @@ void TEST3() {
     AArrayLock l(NUM_SLOTS);
     LockBenchmark lb(&l);
     pthread_t threads[NUM_THREADS];
-    struct timespec start, stop, diff;
+    TicksClock::Ticks before = TicksClock::getTicks();
 
-    clock_gettime(CLOCK_REALTIME, &start);
     for(int i = 0; i < NUM_THREADS; i++)
       threads[i] = makeThread(bind(&LockBenchmark::correctness, &lb, NUM_REENTRIES));
     for(int i = 0; i < NUM_THREADS; i++)
       pthread_join(threads[i], NULL);
-    clock_gettime(CLOCK_REALTIME, &stop);
 
-    timeDiff(start, stop, diff);
+    TicksClock::Ticks duration = TicksClock::getTicks() - before;
     cout << lb.count() << endl;
-    cout << diff.tv_sec << " : " << diff.tv_nsec << endl;
+    cout << duration << endl;
   }
   cout << endl;
 }
@@ -145,9 +147,9 @@ void TEST5() {
 }
 
 int main() {
-  // TEST0();
-  // TEST1();
-  // TEST2();
+  TEST0();
+  TEST1();
+  TEST2();
   TEST3();
   TEST4();
   TEST5();
