@@ -127,10 +127,36 @@ void TEST4() {
   cout << endl;
 }
 
+void TEST5() {
+  for(int k = 0; k < NUM_RUNS; k++) {
+    MCSQueueLock l;
+    LockBenchmark lb(&l);
+    pthread_t threads[NUM_THREADS];
+    // struct timespec start, stop, diff;
+    // clock_gettime(CLOCK_REALTIME, &start);
+    TicksClock::Ticks before = TicksClock::getTicks();
+
+    for(int i = 0; i < NUM_THREADS; i++)
+      threads[i] = makeThread(bind(&LockBenchmark::correctness, &lb, NUM_REENTRIES));
+    for(int i = 0; i < NUM_THREADS; i++)
+      pthread_join(threads[i], NULL);
+
+    // clock_gettime(CLOCK_REALTIME, &stop);
+    TicksClock::Ticks duration = TicksClock::getTicks() - before;
+    cout << duration << endl;
+
+    // timeDiff(start, stop, diff);
+    // cout << lb.count() << endl;
+    // cout << diff.tv_sec << " : " << diff.tv_nsec << endl;
+  }
+  cout << endl;
+}
+
 int main() {
-  TEST0();
-  TEST1();
-  TEST2();
+  // TEST0();
+  // TEST1();
+  // TEST2();
   TEST3();
   TEST4();
+  TEST5();
 }
