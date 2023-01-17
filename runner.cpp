@@ -2,10 +2,21 @@
 #include <time.h>
 #include "LockBenchmark.cpp"
 #include "Thread.hpp"
+#include <queue>
+#include <string>
 
 using lock::LockBenchmark;
 using lock::makeThread;
 using std::tr1::bind;
+using std::queue;
+using std::string;
+
+struct TestDetails {
+  string _lockName;
+  lock::BaseLock* _lock;
+  int _numberOfThreads;
+  pthread_t* _threads;
+};
 
 void timeDiff(
   const struct timespec & start,
@@ -39,8 +50,11 @@ void TEST0() {
 
     TicksClock::Ticks duration = TicksClock::getTicks() - before;
     timeDiff(start, stop, diff);
-    cout << lb.count() << endl;
-    cout << duration << endl;
+    cout << "Correctness  : " << lb.count() << endl;
+    cout << "total  costs : " << duration << endl;
+    cout << "work   costs : " << lb.workTicks() << endl;
+    cout << "lock   costs : " << lb.lockTicks() << endl;
+    cout << "unlock costs : " << lb.unlockTicks() << endl;
     cout << diff.tv_sec << " : " << diff.tv_nsec << endl;
   }
   cout << endl;
@@ -63,8 +77,11 @@ void TEST1() {
 
     TicksClock::Ticks duration = TicksClock::getTicks() - before;
     timeDiff(start, stop, diff);
-    cout << lb.count() << endl;
-    cout << duration << endl;
+    cout << "Correctness  : " << lb.count() << endl;
+    cout << "total  costs : " << duration << endl;
+    cout << "work   costs : " << lb.workTicks() << endl;
+    cout << "lock   costs : " << lb.lockTicks() << endl;
+    cout << "unlock costs : " << lb.unlockTicks() << endl;
     cout << diff.tv_sec << " : " << diff.tv_nsec << endl;
   }
   cout << endl;
@@ -83,8 +100,11 @@ void TEST2() {
       pthread_join(threads[i], NULL);
 
     TicksClock::Ticks duration = TicksClock::getTicks() - before;
-    cout << lb.count() << endl;
-    cout << duration << endl;
+    cout << "Correctness  : " << lb.count() << endl;
+    cout << "total  costs : " << duration << endl;
+    cout << "work   costs : " << lb.workTicks() << endl;
+    cout << "lock   costs : " << lb.lockTicks() << endl;
+    cout << "unlock costs : " << lb.unlockTicks() << endl;
   }
   cout << endl;
 }
@@ -102,8 +122,11 @@ void TEST3() {
       pthread_join(threads[i], NULL);
 
     TicksClock::Ticks duration = TicksClock::getTicks() - before;
-    cout << lb.count() << endl;
-    cout << duration << endl;
+    cout << "Correctness  : " << lb.count() << endl;
+    cout << "total  costs : " << duration << endl;
+    cout << "work   costs : " << lb.workTicks() << endl;
+    cout << "lock   costs : " << lb.lockTicks() << endl;
+    cout << "unlock costs : " << lb.unlockTicks() << endl;
   }
   cout << endl;
 }
@@ -121,8 +144,11 @@ void TEST4() {
       pthread_join(threads[i], NULL);
 
     TicksClock::Ticks duration = TicksClock::getTicks() - before;
-    cout << lb.count() << endl;
-    cout << duration << endl;
+    cout << "Correctness  : " << lb.count() << endl;
+    cout << "total  costs : " << duration << endl;
+    cout << "work   costs : " << lb.workTicks() << endl;
+    cout << "lock   costs : " << lb.lockTicks() << endl;
+    cout << "unlock costs : " << lb.unlockTicks() << endl;
   }
   cout << endl;
 }
@@ -140,8 +166,11 @@ void TEST5() {
       pthread_join(threads[i], NULL);
 
     TicksClock::Ticks duration = TicksClock::getTicks() - before;
-    cout << lb.count() << endl;
-    cout << duration << endl;
+    cout << "Correctness  : " << lb.count() << endl;
+    cout << "total  costs : " << duration << endl;
+    cout << "work   costs : " << lb.workTicks() << endl;
+    cout << "lock   costs : " << lb.lockTicks() << endl;
+    cout << "unlock costs : " << lb.unlockTicks() << endl;
   }
   cout << endl;
 }
