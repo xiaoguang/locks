@@ -5,17 +5,16 @@
 
 namespace lock {
 
-class Stats {
- public:
+struct Stats {
   Stats(pthread_t owner) {
     _owner = owner;
     _workTicks = 0;
     _lockTicks = 0;
     _unlockTicks = 0;
   }
+
   ~Stats() {}
 
- private:
   pthread_t _owner;
   TicksClock::Ticks _workTicks;
   TicksClock::Ticks _lockTicks;
