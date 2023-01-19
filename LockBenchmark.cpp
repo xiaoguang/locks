@@ -31,38 +31,42 @@ class LockBenchmark {
   ~LockBenchmark() {}
 
   inline uint64_t count() const { return _count; }
+  inline TicksClock::Ticks totalTicks() const { return _stats._totalTicks; }
   inline TicksClock::Ticks unlockTicks() const { return _stats._unlockTicks; }
   inline TicksClock::Ticks lockTicks() const { return _stats._lockTicks; }
   inline TicksClock::Ticks workTicks() const { return _stats._workTicks; }
 
-  void correctness(int times) {
+  void correctness(int times, int workLoad, bool metrics) {
     for(int i = 0; i < times; i++) {
-      // ScopedLock sl(_lock);
+      if(!metrics) {
+        ScopedLock sl(_lock);
+        for(int j = 0; j < workLoad; j++) _count++;
+        continue;
+      }
 
       // lock stats
-      /*
       {
-        TicksClock::Ticks before = TicksClock::getTicks();
-        TicksClock::Ticks duration = TicksClock::getTicks() - before;
-        _stats._lockTicks += duration;
+        TicksClock::Ticks ltb = TicksClock::getTicks();
+        _lock->lock();
+        TicksClock::Ticks ltd = TicksClock::getTicks() - ltb;
+        _stats._lockTicks += ltd;
+        _stats._totalTicks += ltd;
       }
-      */
-      _lock->lock();
-
       // work stats
       {
-        TicksClock::Ticks before = TicksClock::getTicks();
-        for (int j = 0; j < WORK_LOAD; j++) _count++;
-        TicksClock::Ticks duration = TicksClock::getTicks() - before;
-        _stats._workTicks += duration;
+        TicksClock::Ticks wtb = TicksClock::getTicks();
+        for(int j = 0; j < workLoad; j++) _count++;
+        TicksClock::Ticks wtd = TicksClock::getTicks() - wtb;
+        _stats._workTicks += wtd;
+        _stats._totalTicks += wtd;
       }
-
       // unlock stats
       {
-        TicksClock::Ticks before = TicksClock::getTicks();
+        TicksClock::Ticks utb = TicksClock::getTicks();
         _lock->unlock();
-        TicksClock::Ticks duration = TicksClock::getTicks() - before;
-        _stats._unlockTicks += duration;
+        TicksClock::Ticks utd = TicksClock::getTicks() - utb;
+        _stats._unlockTicks += utd;
+        _stats._totalTicks += utd;
       }
     }
   }
