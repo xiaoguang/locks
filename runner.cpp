@@ -43,106 +43,54 @@ struct TestDetails {
 
 uint64_t correctnessExpected = (uint64_t)WORK_LOAD * NUM_THREADS * (uint64_t)NUM_REENTRIES;
 uint64_t metricsExpected = (uint64_t)METRICS_LOAD * NUM_THREADS * (uint64_t)METRICS_REENTRIES;
-queue<TestDetails*> correctness;
-queue<TestDetails*> metrics;
 
-void TESTS() {
+void TESTS(queue<TestDetails*>& target, bool metrics) {
   {
     SpinLock* l = new SpinLock();
-    TestDetails* t = new TestDetails("spin_lock", l, false);
-    correctness.push(t);
+    TestDetails* t = new TestDetails("spin_lock", l, metrics);
+    target.push(t);
   }
 
   {
     TTASSpinLock* l = new TTASSpinLock();
-    TestDetails* t = new TestDetails("test_tas_spin_lock", l, false);
-    correctness.push(t);
+    TestDetails* t = new TestDetails("test_tas_spin_lock", l, metrics);
+    target.push(t);
   }
 
   {
     MutexLock* l = new MutexLock();
-    TestDetails* t = new TestDetails("mutex_lock", l, false);
-    correctness.push(t);
+    TestDetails* t = new TestDetails("mutex_lock", l, metrics);
+    target.push(t);
   }
 
   {
     TicketLock* l = new TicketLock();
-    TestDetails* t = new TestDetails("ticket_lock", l, false);
-    correctness.push(t);
+    TestDetails* t = new TestDetails("ticket_lock", l, metrics);
+    target.push(t);
   }
 
   {
     ArrayLock* l = new ArrayLock(NUM_SLOTS);
-    TestDetails* t = new TestDetails("array_lock", l, false);
-    correctness.push(t);
+    TestDetails* t = new TestDetails("array_lock", l, metrics);
+    target.push(t);
   }
 
   {
     AArrayLock* l = new AArrayLock(NUM_SLOTS);
-    TestDetails* t = new TestDetails("aligned_array_lock", l, false);
-    correctness.push(t);
+    TestDetails* t = new TestDetails("aligned_array_lock", l, metrics);
+    target.push(t);
   }
 
   {
     VirtualQueueLock* l = new VirtualQueueLock;
-    TestDetails* t = new TestDetails("virtual_queue_lock", l, false);
-    correctness.push(t);
+    TestDetails* t = new TestDetails("virtual_queue_lock", l, metrics);
+    target.push(t);
   }
 
   {
     MCSQueueLock* l = new MCSQueueLock;
-    TestDetails* t = new TestDetails("mcs_queue_lock", l, false);
-    correctness.push(t);
-  }
-
-
-
-  {
-    SpinLock* l = new SpinLock();
-    TestDetails* t = new TestDetails("spin_lock", l, true);
-    correctness.push(t);
-  }
-
-  {
-    TTASSpinLock* l = new TTASSpinLock();
-    TestDetails* t = new TestDetails("test_tas_spin_lock", l, true);
-    correctness.push(t);
-  }
-
-  {
-    MutexLock* l = new MutexLock();
-    TestDetails* t = new TestDetails("mutex_lock", l, true);
-    metrics.push(t);
-  }
-
-  {
-    TicketLock* l = new TicketLock();
-    TestDetails* t = new TestDetails("ticket_lock", l, true);
-    metrics.push(t);
-  }
-
-  {
-    ArrayLock* l = new ArrayLock(NUM_SLOTS);
-    TestDetails* t = new TestDetails("array_lock", l, true);
-    metrics.push(t);
-  }
-
-  {
-    AArrayLock* l = new AArrayLock(NUM_SLOTS);
-    TestDetails* t = new TestDetails("aligned_array_lock", l, true);
-    metrics.push(t);
-  }
-
-  {
-    VirtualQueueLock* l = new VirtualQueueLock;
-    TestDetails* t = new TestDetails("virtual_queue_lock", l, true);
-    metrics.push(t);
-  }
-
-  {
-    MCSQueueLock* l = new MCSQueueLock;
-    TestDetails* t = new TestDetails("mcs_queue_lock", l, true);
-    metrics.push(t);
+    TestDetails* t = new TestDetails("mcs_queue_lock", l, metrics);
+    target.push(t);
   }
 }
 
@@ -201,7 +149,10 @@ void runTests(queue<TestDetails*>& target) {
 }
 
 int main() {
-  TESTS();
+  queue<TestDetails*> correctness;
+  queue<TestDetails*> metrics;
+  TESTS(correctness, false);
+  TESTS(metrics, true);
   runTests(correctness);
   runTests(metrics);
 }
