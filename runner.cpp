@@ -41,8 +41,7 @@ struct TestDetails {
   bool _metrics;
 };
 
-uint64_t correctnessExpected = (uint64_t)WORK_LOAD * NUM_THREADS * (uint64_t)NUM_REENTRIES;
-uint64_t metricsExpected = (uint64_t)METRICS_LOAD * NUM_THREADS * (uint64_t)METRICS_REENTRIES;
+uint64_t expected = (uint64_t)WORK_LOAD * NUM_THREADS * (uint64_t)NUM_REENTRIES;
 
 void TESTS(queue<TestDetails*>& target, bool metrics) {
   {
@@ -106,17 +105,11 @@ void runTests(queue<TestDetails*>& target) {
       clock_gettime(CLOCK_REALTIME, &start);
 
       for(int i = 0; i < NUM_THREADS; i++) {
-        if(details->_metrics) {
-          threads[i] = makeThread(
-            bind(&LockBenchmark::correctness, &lb, METRICS_REENTRIES, METRICS_LOAD, details->_metrics)
-          );
-        }
-        else {
-          threads[i] = makeThread(
-            bind(&LockBenchmark::correctness, &lb, NUM_REENTRIES, WORK_LOAD, details->_metrics)
-          );
-        }
+        threads[i] = makeThread(
+          bind(&LockBenchmark::correctness, &lb, NUM_REENTRIES, WORK_LOAD, details->_metrics)
+        );
       }
+
       for(int i = 0; i < NUM_THREADS; i++)
         pthread_join(threads[i], NULL);
 
@@ -124,18 +117,14 @@ void runTests(queue<TestDetails*>& target) {
       timeDiff(start, stop, diff);
       cout << "Lock Name    : " << details->_name << endl;
       cout << "Correctness  : " << lb.count() << endl;
+      cout << "Expected     : " << expected << endl;
+      assert(lb.count() == expected);
 
       if(details->_metrics) {
-        cout << "Expected     : " << metricsExpected << endl;
-        assert(lb.count() == metricsExpected);
         cout << "total  costs : " << lb.totalTicks() << endl;
         cout << "work   costs : " << lb.workTicks() << endl;
         cout << "lock   costs : " << lb.lockTicks() << endl;
         cout << "unlock costs : " << lb.unlockTicks() << endl;
-      }
-      else {
-        cout << "Expected     : " << correctnessExpected << endl;
-        assert(lb.count() == correctnessExpected);
       }
 
       cout << "Time Elapse  : " << diff.tv_sec << "." << diff.tv_nsec << endl;
