@@ -492,3 +492,249 @@ Time Elapse  : 2.127095165
 
 ==============================================================================================================================
 ==============================================================================================================================
+Threads:  1 << 5
+WorkLoad: 1 << 3
+Reentry:  1 << 18
+
+Lock Name    : spin_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 8.176790234
+
+Lock Name    : spin_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 12.2441508
+
+
+Lock Name    : test_tas_spin_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 2.643870050
+
+Lock Name    : test_tas_spin_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 3.186066447
+
+
+Lock Name    : mutex_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 1.815163894
+
+Lock Name    : mutex_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 1.797437915
+
+
+Lock Name    : ticket_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 6.19654068
+
+Lock Name    : ticket_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 5.941721325
+
+
+Lock Name    : array_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 3.30671467
+
+Lock Name    : array_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 2.981225801
+
+
+Lock Name    : aligned_array_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 4.180251772
+
+Lock Name    : aligned_array_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 3.882164834
+
+
+Lock Name    : virtual_queue_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 1.644884181
+
+Lock Name    : virtual_queue_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 1.632559414
+
+
+Lock Name    : mcs_queue_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 1.738948016
+
+Lock Name    : mcs_queue_lock
+Correctness  : 67108864
+Expected     : 67108864
+Time Elapse  : 1.674471333
+
+
+Lock Name    : spin_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 867682576906
+work   costs : 1190532028
+lock   costs : 865809569928
+unlock costs : 718234384
+Time Elapse  : 14.185117481
+
+Lock Name    : spin_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 744496954834
+work   costs : 1105691998
+lock   costs : 743048792090
+unlock costs : 389177820
+Time Elapse  : 13.140131416
+
+
+Lock Name    : test_tas_spin_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 198869496852
+work   costs : 673582632
+lock   costs : 197678607874
+unlock costs : 565733442
+Time Elapse  : 3.451662211
+
+Lock Name    : test_tas_spin_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 259144873950
+work   costs : 914541674
+lock   costs : 257369415882
+unlock costs : 860916492
+Time Elapse  : 4.186999924
+
+
+Lock Name    : mutex_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 258050010584
+work   costs : 825050794
+lock   costs : 154980112538
+unlock costs : 110976188848
+Time Elapse  : 3.839896518
+
+Lock Name    : mutex_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 250188326832
+work   costs : 804177672
+lock   costs : 150085884200
+unlock costs : 107269481204
+Time Elapse  : 3.718264061
+
+
+Lock Name    : ticket_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 460491355946
+work   costs : 776009240
+lock   costs : 453634832426
+unlock costs : 6135581138
+Time Elapse  : 6.724505722
+
+Lock Name    : ticket_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 455244714716
+work   costs : 787759054
+lock   costs : 448396538880
+unlock costs : 6113143054
+Time Elapse  : 6.630201080
+
+
+Lock Name    : array_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 357605366376
+work   costs : 1596740840
+lock   costs : 355810611094
+unlock costs : 198014796
+Time Elapse  : 5.105448676
+
+Lock Name    : array_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 295152010148
+work   costs : 1453401838
+lock   costs : 293502818236
+unlock costs : 195874236
+Time Elapse  : 4.213544530
+
+
+Lock Name    : aligned_array_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 312473199338
+work   costs : 1722762748
+lock   costs : 310531967878
+unlock costs : 219102840
+Time Elapse  : 4.491172178
+
+Lock Name    : aligned_array_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 284404856480
+work   costs : 1567220300
+lock   costs : 282624414342
+unlock costs : 213473160
+Time Elapse  : 4.89669104
+
+
+Lock Name    : virtual_queue_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 179519867674
+work   costs : 1507538346
+lock   costs : 177822357508
+unlock costs : 190054508
+Time Elapse  : 2.576138159
+
+Lock Name    : virtual_queue_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 171191598598
+work   costs : 1426888692
+lock   costs : 169563862258
+unlock costs : 200993204
+Time Elapse  : 2.456964346
+
+
+Lock Name    : mcs_queue_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 184411372252
+work   costs : 1744887070
+lock   costs : 182471988106
+unlock costs : 194710546
+Time Elapse  : 2.643620014
+
+Lock Name    : mcs_queue_lock
+Correctness  : 67108864
+Expected     : 67108864
+total  costs : 173846291928
+work   costs : 1650237602
+lock   costs : 172002736082
+unlock costs : 193539408
+Time Elapse  : 2.494345189
+
+
+==============================================================================================================================
+==============================================================================================================================
