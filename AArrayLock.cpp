@@ -30,8 +30,8 @@ void AArrayLock::unlock() {
   // vs. ARM chipset's weaker protocal
   // _flags[_ME]._flag = false;
   // _flags[slot]._flag = true;
-  __atomic_store_n(&_flags[_ME], false, __ATOMIC_RELEASE);
-  __atomic_store_n(&_flags[slot], true, __ATOMIC_RELEASE);
+  __atomic_store_n(&(_flags[_ME]._flag), false, __ATOMIC_RELEASE);
+  __atomic_store_n(&(_flags[slot]._flag), true, __ATOMIC_RELEASE);
 }
 
 }
