@@ -27,7 +27,7 @@ void ArrayLock::lock() {
 void ArrayLock::unlock() {
   uint64_t slot = (_ME + 1) % _size;
   
-  // intel chipset has a stronger default protocal
+  // intel chipset has a stronger coherent protocal
   // vs. ARM chipset's weaker protocal
   // _flags[_ME] = false;
   // _flags[slot] = true;
