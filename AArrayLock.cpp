@@ -26,8 +26,11 @@ void AArrayLock::lock() {
 
 void AArrayLock::unlock() {
   uint64_t slot = (_ME + 1) % _size;
-  _flags[_ME]._flag = false;
-  _flags[slot]._flag = true;
+  // intel has strong coherent protocal
+  // _flags[_ME]._flag = false;
+  // _flags[slot]._flag = true;
+  __atomic_store_n(&_flags[_ME], false, __ATOMIC_RELAXED);
+  __atomic_store_n(&_flags[slot], true, __ATOMIC_RELAXED);
 }
 
 }
