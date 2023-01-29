@@ -26,7 +26,8 @@ void AArrayLock::lock() {
 
 void AArrayLock::unlock() {
   uint64_t slot = (_ME + 1) % _size;
-  // intel has strong coherent protocal
+  // intel chipset has a stronger coherent protocal
+  // vs. ARM chipset's weaker protocal
   // _flags[_ME]._flag = false;
   // _flags[slot]._flag = true;
   __atomic_store_n(&_flags[_ME], false, __ATOMIC_RELEASE);
